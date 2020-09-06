@@ -7,6 +7,7 @@ use App\Repository\AdRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AdController extends AbstractController
 {
@@ -29,7 +30,25 @@ class AdController extends AbstractController
      * @return Response
      */
     public function create() {
-        return $this->render('ad/new.html.twig');
+        $ad = new Ad();
+        $form = $this->createFormBuilder($ad)
+                     ->add('title')
+                     ->add('introduction')
+                     ->add('content')
+                     ->add('rooms')
+                     ->add('price')
+                     ->add('coverImage')
+                     ->add('save', SubmitType::class, [
+                         'label' => 'Créer la nouvelle annonce',
+                         'attr' => [
+                             'class' => 'btn btn-primary'
+                         ]
+                     ])
+                     ->getForm();
+
+        return $this->render('ad/new.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
 
