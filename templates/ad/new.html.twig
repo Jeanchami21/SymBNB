@@ -35,7 +35,7 @@
 {% endblock %}
 
 {% block _ad_images_entry_widget %}
-    <div class="from-group">
+    <div class="form-group">
         <div class="row">
             <div class="col">
                 {{ form_widget(form.url) }}
@@ -47,3 +47,17 @@
     </div>
 {% endblock %}
 
+{% block javascripts %}
+
+<script>
+    $('#add-image').click(function(){
+        //Je récupére le numéro des futurs champs que je vais créer
+        const index = $('#ad_images div.form-group').length;
+
+        //Je récupére le prototype des entrées
+        const tmpl = $('#ad_images').data('prototype').replace(/__name__/g, index);
+        
+        $('#ad_images').append(tmpl);
+    });
+</script>
+{% endblock %}
